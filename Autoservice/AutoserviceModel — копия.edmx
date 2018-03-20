@@ -1,0 +1,651 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AutoserviceModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AutoserviceModelStoreContainer">
+    <EntitySet Name="AutoMarks" EntityType="AutoserviceModel.Store.AutoMarks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AutoModels" EntityType="AutoserviceModel.Store.AutoModels" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Autoservices" EntityType="AutoserviceModel.Store.Autoservices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Clients" EntityType="AutoserviceModel.Store.Clients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Manufacturers" EntityType="AutoserviceModel.Store.Manufacturers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="AutoserviceModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Prices" EntityType="AutoserviceModel.Store.Prices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Providers" EntityType="AutoserviceModel.Store.Providers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Spares" EntityType="AutoserviceModel.Store.Spares" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_MarkModel" Association="AutoserviceModel.Store.FK_MarkModel">
+      <End Role="AutoMarkSet" EntitySet="AutoMarks" />
+      <End Role="AutoModelSet" EntitySet="AutoModels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AutoModelOrder" Association="AutoserviceModel.Store.FK_AutoModelOrder">
+      <End Role="AutoModelSet" EntitySet="AutoModels" />
+      <End Role="OrderSet" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AutoserviceOrder" Association="AutoserviceModel.Store.FK_AutoserviceOrder">
+      <End Role="AutoserviceSet" EntitySet="Autoservices" />
+      <End Role="OrderSet" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientOrder" Association="AutoserviceModel.Store.FK_ClientOrder">
+      <End Role="ClientSet" EntitySet="Clients" />
+      <End Role="OrderSet" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ManufacturerOrder" Association="AutoserviceModel.Store.FK_ManufacturerOrder">
+      <End Role="ManufacturerSet" EntitySet="Manufacturers" />
+      <End Role="OrderSet" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PriceManufacturer" Association="AutoserviceModel.Store.FK_PriceManufacturer">
+      <End Role="ManufacturerSet" EntitySet="Manufacturers" />
+      <End Role="PriceSet" EntitySet="Prices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProviderOrder" Association="AutoserviceModel.Store.FK_ProviderOrder">
+      <End Role="ProviderSet" EntitySet="Providers" />
+      <End Role="OrderSet" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SpareOrder" Association="AutoserviceModel.Store.FK_SpareOrder">
+      <End Role="SpareSet" EntitySet="Spares" />
+      <End Role="OrderSet" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PriceProvider" Association="AutoserviceModel.Store.FK_PriceProvider">
+      <End Role="ProviderSet" EntitySet="Providers" />
+      <End Role="PriceSet" EntitySet="Prices" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PriceSpare" Association="AutoserviceModel.Store.FK_PriceSpare">
+      <End Role="SpareSet" EntitySet="Spares" />
+      <End Role="PriceSet" EntitySet="Prices" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="AutoMarks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AutoModels">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AutoMarkId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Autoservices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Positive" Type="int" Nullable="false" />
+    <Property Name="Negative" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Tel" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Manufacturers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ManufacturerId" Type="int" Nullable="false" />
+    <Property Name="AutoserviceId" Type="int" Nullable="false" />
+    <Property Name="SpareVendorcode" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ProviderId" Type="int" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="AutoModelId" Type="int" Nullable="false" />
+    <Property Name="SparePrice" Type="int" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TotalPrice" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Prices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
+    <Property Name="Spare_Vendorcode" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Provider_Id" Type="int" Nullable="false" />
+    <Property Name="Manufacturer_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Providers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Spares">
+    <Key>
+      <PropertyRef Name="Vendorcode" />
+    </Key>
+    <Property Name="Vendorcode" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_MarkModel">
+    <End Role="AutoMarkSet" Type="AutoserviceModel.Store.AutoMarks" Multiplicity="1" />
+    <End Role="AutoModelSet" Type="AutoserviceModel.Store.AutoModels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AutoMarkSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AutoModelSet">
+        <PropertyRef Name="AutoMarkId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AutoModelOrder">
+    <End Role="AutoModelSet" Type="AutoserviceModel.Store.AutoModels" Multiplicity="1" />
+    <End Role="OrderSet" Type="AutoserviceModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AutoModelSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderSet">
+        <PropertyRef Name="AutoModelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AutoserviceOrder">
+    <End Role="AutoserviceSet" Type="AutoserviceModel.Store.Autoservices" Multiplicity="1" />
+    <End Role="OrderSet" Type="AutoserviceModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AutoserviceSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderSet">
+        <PropertyRef Name="AutoserviceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientOrder">
+    <End Role="ClientSet" Type="AutoserviceModel.Store.Clients" Multiplicity="1" />
+    <End Role="OrderSet" Type="AutoserviceModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClientSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderSet">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ManufacturerOrder">
+    <End Role="ManufacturerSet" Type="AutoserviceModel.Store.Manufacturers" Multiplicity="1" />
+    <End Role="OrderSet" Type="AutoserviceModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ManufacturerSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderSet">
+        <PropertyRef Name="ManufacturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PriceManufacturer">
+    <End Role="ManufacturerSet" Type="AutoserviceModel.Store.Manufacturers" Multiplicity="1" />
+    <End Role="PriceSet" Type="AutoserviceModel.Store.Prices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ManufacturerSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PriceSet">
+        <PropertyRef Name="Manufacturer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProviderOrder">
+    <End Role="ProviderSet" Type="AutoserviceModel.Store.Providers" Multiplicity="1" />
+    <End Role="OrderSet" Type="AutoserviceModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProviderSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderSet">
+        <PropertyRef Name="ProviderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SpareOrder">
+    <End Role="SpareSet" Type="AutoserviceModel.Store.Spares" Multiplicity="1" />
+    <End Role="OrderSet" Type="AutoserviceModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SpareSet">
+        <PropertyRef Name="Vendorcode" />
+      </Principal>
+      <Dependent Role="OrderSet">
+        <PropertyRef Name="SpareVendorcode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PriceProvider">
+    <End Role="ProviderSet" Type="AutoserviceModel.Store.Providers" Multiplicity="1" />
+    <End Role="PriceSet" Type="AutoserviceModel.Store.Prices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProviderSet">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PriceSet">
+        <PropertyRef Name="Provider_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PriceSpare">
+    <End Role="SpareSet" Type="AutoserviceModel.Store.Spares" Multiplicity="1" />
+    <End Role="PriceSet" Type="AutoserviceModel.Store.Prices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SpareSet">
+        <PropertyRef Name="Vendorcode" />
+      </Principal>
+      <Dependent Role="PriceSet">
+        <PropertyRef Name="Spare_Vendorcode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AutoserviceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AutoMark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AutoModelSets" Relationship="Self.FK_MarkModel" FromRole="AutoMarkSet" ToRole="AutoModelSet" />
+        </EntityType>
+        <EntityType Name="AutoModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AutoMarkId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AutoMarkSet" Relationship="Self.FK_MarkModel" FromRole="AutoModelSet" ToRole="AutoMarkSet" />
+          <NavigationProperty Name="OrderSets" Relationship="Self.FK_AutoModelOrder" FromRole="AutoModelSet" ToRole="OrderSet" />
+        </EntityType>
+        <EntityType Name="Autoservice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Positive" Type="Int32" Nullable="false" />
+          <Property Name="Negative" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrderSets" Relationship="Self.FK_AutoserviceOrder" FromRole="AutoserviceSet" ToRole="OrderSet" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="true" />
+          <NavigationProperty Name="OrderSets" Relationship="Self.FK_ClientOrder" FromRole="ClientSet" ToRole="OrderSet" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OrderSets" Relationship="Self.FK_ManufacturerOrder" FromRole="ManufacturerSet" ToRole="OrderSet" />
+          <NavigationProperty Name="PriceSets" Relationship="Self.FK_PriceManufacturer" FromRole="ManufacturerSet" ToRole="PriceSet" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManufacturerId" Type="Int32" Nullable="false" />
+          <Property Name="AutoserviceId" Type="Int32" Nullable="false" />
+          <Property Name="SpareVendorcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="AutoModelId" Type="Int32" Nullable="false" />
+          <Property Name="SparePrice" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalPrice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AutoModelSet" Relationship="Self.FK_AutoModelOrder" FromRole="OrderSet" ToRole="AutoModelSet" />
+          <NavigationProperty Name="AutoserviceSet" Relationship="Self.FK_AutoserviceOrder" FromRole="OrderSet" ToRole="AutoserviceSet" />
+          <NavigationProperty Name="ClientSet" Relationship="Self.FK_ClientOrder" FromRole="OrderSet" ToRole="ClientSet" />
+          <NavigationProperty Name="ManufacturerSet" Relationship="Self.FK_ManufacturerOrder" FromRole="OrderSet" ToRole="ManufacturerSet" />
+          <NavigationProperty Name="ProviderSet" Relationship="Self.FK_ProviderOrder" FromRole="OrderSet" ToRole="ProviderSet" />
+          <NavigationProperty Name="SpareSet" Relationship="Self.FK_SpareOrder" FromRole="OrderSet" ToRole="SpareSet" />
+        </EntityType>
+        <EntityType Name="Price">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="Spare_Vendorcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Provider_Id" Type="Int32" Nullable="false" />
+          <Property Name="Manufacturer_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ManufacturerSet" Relationship="Self.FK_PriceManufacturer" FromRole="PriceSet" ToRole="ManufacturerSet" />
+          <NavigationProperty Name="ProviderSet" Relationship="Self.FK_PriceProvider" FromRole="PriceSet" ToRole="ProviderSet" />
+          <NavigationProperty Name="SpareSet" Relationship="Self.FK_PriceSpare" FromRole="PriceSet" ToRole="SpareSet" />
+        </EntityType>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OrderSets" Relationship="Self.FK_ProviderOrder" FromRole="ProviderSet" ToRole="OrderSet" />
+          <NavigationProperty Name="PriceSets" Relationship="Self.FK_PriceProvider" FromRole="ProviderSet" ToRole="PriceSet" />
+        </EntityType>
+        <EntityType Name="Spare">
+          <Key>
+            <PropertyRef Name="Vendorcode" />
+          </Key>
+          <Property Name="Vendorcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OrderSets" Relationship="Self.FK_SpareOrder" FromRole="SpareSet" ToRole="OrderSet" />
+          <NavigationProperty Name="PriceSets" Relationship="Self.FK_PriceSpare" FromRole="SpareSet" ToRole="PriceSet" />
+        </EntityType>
+        <Association Name="FK_MarkModel">
+          <End Role="AutoMarkSet" Type="AutoserviceModel.AutoMark" Multiplicity="1" />
+          <End Role="AutoModelSet" Type="AutoserviceModel.AutoModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoMarkSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AutoModelSet">
+              <PropertyRef Name="AutoMarkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AutoModelOrder">
+          <End Role="AutoModelSet" Type="AutoserviceModel.AutoModel" Multiplicity="1" />
+          <End Role="OrderSet" Type="AutoserviceModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoModelSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="AutoModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AutoserviceOrder">
+          <End Role="AutoserviceSet" Type="AutoserviceModel.Autoservice" Multiplicity="1" />
+          <End Role="OrderSet" Type="AutoserviceModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AutoserviceSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="AutoserviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientOrder">
+          <End Role="ClientSet" Type="AutoserviceModel.Client" Multiplicity="1" />
+          <End Role="OrderSet" Type="AutoserviceModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManufacturerOrder">
+          <End Role="ManufacturerSet" Type="AutoserviceModel.Manufacturer" Multiplicity="1" />
+          <End Role="OrderSet" Type="AutoserviceModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManufacturerSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceManufacturer">
+          <End Role="ManufacturerSet" Type="AutoserviceModel.Manufacturer" Multiplicity="1" />
+          <End Role="PriceSet" Type="AutoserviceModel.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ManufacturerSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSet">
+              <PropertyRef Name="Manufacturer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProviderOrder">
+          <End Role="ProviderSet" Type="AutoserviceModel.Provider" Multiplicity="1" />
+          <End Role="OrderSet" Type="AutoserviceModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProviderSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="ProviderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpareOrder">
+          <End Role="SpareSet" Type="AutoserviceModel.Spare" Multiplicity="1" />
+          <End Role="OrderSet" Type="AutoserviceModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpareSet">
+              <PropertyRef Name="Vendorcode" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="SpareVendorcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceProvider">
+          <End Role="ProviderSet" Type="AutoserviceModel.Provider" Multiplicity="1" />
+          <End Role="PriceSet" Type="AutoserviceModel.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProviderSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSet">
+              <PropertyRef Name="Provider_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceSpare">
+          <End Role="SpareSet" Type="AutoserviceModel.Spare" Multiplicity="1" />
+          <End Role="PriceSet" Type="AutoserviceModel.Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpareSet">
+              <PropertyRef Name="Vendorcode" />
+            </Principal>
+            <Dependent Role="PriceSet">
+              <PropertyRef Name="Spare_Vendorcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AutoserviceEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AutoMarks" EntityType="AutoserviceModel.AutoMark" />
+          <EntitySet Name="AutoModels" EntityType="AutoserviceModel.AutoModel" />
+          <EntitySet Name="Autoservices" EntityType="AutoserviceModel.Autoservice" />
+          <EntitySet Name="Clients" EntityType="AutoserviceModel.Client" />
+          <EntitySet Name="Manufacturers" EntityType="AutoserviceModel.Manufacturer" />
+          <EntitySet Name="Orders" EntityType="AutoserviceModel.Order" />
+          <EntitySet Name="Prices" EntityType="AutoserviceModel.Price" />
+          <EntitySet Name="Providers" EntityType="AutoserviceModel.Provider" />
+          <EntitySet Name="Spares" EntityType="AutoserviceModel.Spare" />
+          <AssociationSet Name="FK_MarkModel" Association="Self.FK_MarkModel">
+            <End Role="AutoMarkSet" EntitySet="AutoMarks" />
+            <End Role="AutoModelSet" EntitySet="AutoModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AutoModelOrder" Association="Self.FK_AutoModelOrder">
+            <End Role="AutoModelSet" EntitySet="AutoModels" />
+            <End Role="OrderSet" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AutoserviceOrder" Association="Self.FK_AutoserviceOrder">
+            <End Role="AutoserviceSet" EntitySet="Autoservices" />
+            <End Role="OrderSet" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientOrder" Association="Self.FK_ClientOrder">
+            <End Role="ClientSet" EntitySet="Clients" />
+            <End Role="OrderSet" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManufacturerOrder" Association="Self.FK_ManufacturerOrder">
+            <End Role="ManufacturerSet" EntitySet="Manufacturers" />
+            <End Role="OrderSet" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceManufacturer" Association="Self.FK_PriceManufacturer">
+            <End Role="ManufacturerSet" EntitySet="Manufacturers" />
+            <End Role="PriceSet" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProviderOrder" Association="Self.FK_ProviderOrder">
+            <End Role="ProviderSet" EntitySet="Providers" />
+            <End Role="OrderSet" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpareOrder" Association="Self.FK_SpareOrder">
+            <End Role="SpareSet" EntitySet="Spares" />
+            <End Role="OrderSet" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceProvider" Association="Self.FK_PriceProvider">
+            <End Role="ProviderSet" EntitySet="Providers" />
+            <End Role="PriceSet" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceSpare" Association="Self.FK_PriceSpare">
+            <End Role="SpareSet" EntitySet="Spares" />
+            <End Role="PriceSet" EntitySet="Prices" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AutoserviceModelStoreContainer" CdmEntityContainer="AutoserviceEntities1">
+    <EntitySetMapping Name="AutoMarks">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoserviceModel.AutoMark)">
+        <MappingFragment StoreEntitySet="AutoMarks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AutoModels">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoserviceModel.AutoModel)">
+        <MappingFragment StoreEntitySet="AutoModels">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AutoMarkId" ColumnName="AutoMarkId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Autoservices">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoserviceModel.Autoservice)">
+        <MappingFragment StoreEntitySet="Autoservices">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Positive" ColumnName="Positive" />
+          <ScalarProperty Name="Negative" ColumnName="Negative" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoserviceModel.Client)">
+        <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Manufacturers">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoserviceModel.Manufacturer)">
+        <MappingFragment StoreEntitySet="Manufacturers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoserviceModel.Order)">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+          <ScalarProperty Name="AutoserviceId" ColumnName="AutoserviceId" />
+          <ScalarProperty Name="SpareVendorcode" ColumnName="SpareVendorcode" />
+          <ScalarProperty Name="ProviderId" ColumnName="ProviderId" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="AutoModelId" ColumnName="AutoModelId" />
+          <ScalarProperty Name="SparePrice" ColumnName="SparePrice" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Prices">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoserviceModel.Price)">
+        <MappingFragment StoreEntitySet="Prices">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Spare_Vendorcode" ColumnName="Spare_Vendorcode" />
+          <ScalarProperty Name="Provider_Id" ColumnName="Provider_Id" />
+          <ScalarProperty Name="Manufacturer_Id" ColumnName="Manufacturer_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Providers">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoserviceModel.Provider)">
+        <MappingFragment StoreEntitySet="Providers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Spares">
+      <EntityTypeMapping TypeName="IsTypeOf(AutoserviceModel.Spare)">
+        <MappingFragment StoreEntitySet="Spares">
+          <ScalarProperty Name="Vendorcode" ColumnName="Vendorcode" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
