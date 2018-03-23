@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -180,6 +182,48 @@ namespace Autoservice
         {
             var form = new Filter();
             form.ShowDialog();
+
+            var headers = form.headers;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Autoservice.Properties.Settings.AutoserviceConnectionString"].ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(form.queryString, connection);
+                connection.Open();
+                SqlDataReader reader = null;
+                try
+                {
+                    reader = command.ExecuteReader();
+                
+                    DataTable table = new DataTable();
+                    table.Columns.AddRange(headers.Select(h => new DataColumn(h)).ToArray());
+                    while (reader.Read())
+                    {
+                        orderListView.DataSource = table;
+
+                        object[] cells = new object[reader.FieldCount];
+                        reader.GetValues(cells);
+
+                        table.Rows.Add(cells);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(
+                        $@"Во время выполенения запроса или вывода таблицы произошла непредвиденная ошибка. Информация об ошибке: {
+                                exception.Message
+                            }", @"Непредвиденная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    // Always call Close when done reading.
+                    reader?.Close();
+                }
+            }
+            
+        }
+
+        private void clearFilter_Click(object sender, EventArgs e)
+        {
+            ReloadOrdersData();
         }
     }
 }

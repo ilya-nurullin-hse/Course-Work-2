@@ -47,11 +47,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 15);
+            this.label1.Location = new System.Drawing.Point(33, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 17);
+            this.label1.Size = new System.Drawing.Size(42, 17);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Имя";
+            this.label1.Text = "ФИО";
             // 
             // label2
             // 

@@ -26,7 +26,7 @@ namespace Autoservice
         private void CatalogEditor_Load(object sender, EventArgs e)
         {
             _editor.ShowTable(ref catalogDataGridView);
-            Width = catalogDataGridView.Columns.GetColumnsWidth(DataGridViewElementStates.Visible) + 20;
+            Width = catalogDataGridView.Columns.GetColumnsWidth(DataGridViewElementStates.Visible) + 36;
 
             CenterToParent();
         }

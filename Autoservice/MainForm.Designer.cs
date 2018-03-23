@@ -40,6 +40,7 @@
             this.filterButton = new System.Windows.Forms.Button();
             this.addOrderButton = new System.Windows.Forms.Button();
             this.orderListView = new System.Windows.Forms.DataGridView();
+            this.clearFilter = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -123,6 +124,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.clearFilter);
             this.splitContainer1.Panel1.Controls.Add(this.filterButton);
             this.splitContainer1.Panel1.Controls.Add(this.addOrderButton);
             // 
@@ -170,6 +172,16 @@
             this.orderListView.TabIndex = 0;
             this.orderListView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.orderListView_CellDoubleClick);
             // 
+            // clearFilter
+            // 
+            this.clearFilter.Location = new System.Drawing.Point(416, 3);
+            this.clearFilter.Name = "clearFilter";
+            this.clearFilter.Size = new System.Drawing.Size(349, 43);
+            this.clearFilter.TabIndex = 2;
+            this.clearFilter.Text = "Очистить фильтр / Обновить таблицу заказов";
+            this.clearFilter.UseVisualStyleBackColor = true;
+            this.clearFilter.Click += new System.EventHandler(this.clearFilter_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -207,5 +219,6 @@
         private System.Windows.Forms.ToolStripMenuItem работникиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem клиентыToolStripMenuItem;
         private System.Windows.Forms.Button filterButton;
+        private System.Windows.Forms.Button clearFilter;
     }
 }
