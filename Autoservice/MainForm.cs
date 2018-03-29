@@ -17,6 +17,8 @@ namespace Autoservice
     {
         AutoserviceEntities db = new AutoserviceEntities();
 
+        private bool isInFilterMode = false;
+
         public MainForm()
         {
             InitializeComponent();
@@ -52,10 +54,18 @@ namespace Autoservice
                     Модель = o.AutoModelSet.Name,
                     Клиент = o.ClientSet.Name + " " + o.ClientSet.Tel
                 }).ToList();
+
+            isInFilterMode = false;
         }
 
         private void orderListView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (isInFilterMode)
+            {
+                MessageBox.Show(@"Редактирование заказа не поддерживается при включении фильтра.");
+                return;
+            }
+
             if (e.RowIndex < 0 || e.ColumnIndex < 0)
                 return;
 
@@ -183,6 +193,10 @@ namespace Autoservice
             var form = new Filter();
             form.ShowDialog();
 
+            if (string.IsNullOrEmpty(form.queryString))
+                return;
+
+
             var headers = form.headers;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Autoservice.Properties.Settings.AutoserviceConnectionString"].ConnectionString))
             {
@@ -204,6 +218,7 @@ namespace Autoservice
 
                         table.Rows.Add(cells);
                     }
+                    isInFilterMode = true;
                 }
                 catch (Exception exception)
                 {

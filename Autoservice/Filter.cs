@@ -398,6 +398,8 @@ JOIN AutoMarks ON AutoMarks.Id = AutoModels.AutoMarkId
             for (int i = 0; i < filterGridView.Rows.Count; ++i)
             {
                 var filter = filterGridView.Rows[i].DataBoundItem as FilterElement;
+                var prevFilter = (i > 0) ? filterGridView.Rows[i - 1].DataBoundItem as FilterElement : null;
+
                 if (filter != null && !filter.isEmpty())
                 {
                     if (filter.Связка == "(")
@@ -420,6 +422,13 @@ JOIN AutoMarks ON AutoMarks.Id = AutoModels.AutoMarkId
                         continue;
                     }
 
+                    if ((filter.Связка == "ИЛИ" || filter.Связка == "И") && string.IsNullOrEmpty(filter.Имя_столбца))
+                    {
+                        res.Add(
+                            string.Format(" {0} ", filter.Связка.ToUpper().Replace("ИЛИ", "OR").Replace("И", "AND")));
+                        continue;
+                    }
+
                     var dbField = filter.Имя_столбца.Split('.');
                     var tableName = dbField[0];
                     var fieldName = dbField[1];
@@ -429,7 +438,7 @@ JOIN AutoMarks ON AutoMarks.Id = AutoModels.AutoMarkId
                     var dbFieldName = _field.Value.Where(t => t.Rus == fieldName).Select(t => t.Name).First();
 
                     var linker = "";
-                    if (string.IsNullOrEmpty(filter.Связка) && !isFirstIteration)
+                    if (string.IsNullOrEmpty(filter.Связка) && !isFirstIteration && prevFilter?.Связка != "(")
                     {
                         MessageBox.Show(@"Пропущена связка!", @"Ошибка",
                             MessageBoxButtons.OK, MessageBoxIcon.Stop);
